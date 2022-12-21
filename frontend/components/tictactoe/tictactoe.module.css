@@ -1,0 +1,41 @@
+.container{
+ 
+    display: flex;
+    flex-direction: column;
+    border: 3px solid black;
+    padding: 0;
+    height: 180px;
+    width: 180px;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.line{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.player1Won{
+    height: 150px;
+    width: 150px;
+
+
+    
+    background: linear-gradient(to top right, transparent calc(50% - 10px / 2), red calc(50% - 10px / 2) calc(50% + 10px / 2), transparent calc(50% + 10px / 2)),
+				linear-gradient(to bottom right, transparent calc(50% - 10px / 2), red calc(50% - 10px / 2) calc(50% + 10px / 2), transparent calc(50% + 10px / 2));
+	background-size: 80% 80%;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.player2Won{
+    height: 150px;
+    width: 150px;
+
+    background: radial-gradient(blue 65%, transparent 70%);
+}
