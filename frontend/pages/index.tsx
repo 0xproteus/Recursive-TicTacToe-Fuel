@@ -5,8 +5,8 @@ import Board from "../components/board/board"
 import { useState, useEffect, use } from "react"
 
 import { BigNumberish, Provider, Wallet, TransactionResponse, Address } from "fuels"
-import { ContractAbi__factory } from "./contracts"
-import { ContractAbi, IdentityOutput, IdentityInput, AddressInput } from "./contracts/ContractAbi"
+import { ContractAbi__factory } from "../contracts"
+import { ContractAbi, IdentityOutput, IdentityInput, AddressInput } from "../contracts/ContractAbi"
 import WalletContext from "../contexts/WalletContext"
 import ConnectWallet from "../components/connect_wallet/ConnectWallet"
 
