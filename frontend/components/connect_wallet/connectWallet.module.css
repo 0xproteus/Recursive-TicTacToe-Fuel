@@ -1,0 +1,55 @@
+.container {
+  height: 50px;
+  position: relative;
+  padding: 0 0px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  background: none;
+  box-shadow: none;
+  color: white;
+}
+
+.connect_button {
+  overflow: hidden;
+  width: inherit;
+  min-height: 50px;
+  height: 100%;
+  animation: appear 1s ease-out;
+  border-radius: 0;
+
+  box-shadow: none;
+  border: none;
+  /* animation: pulse 0.75s ease-in-out infinite alternate; */
+  transition: all 0.1s ease-out;
+
+  color: black;
+  cursor: pointer;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+
+  /*  */
+
+  border-radius: 0;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  margin-right: 10px;
+
+  background-color: red;
+}
+
+.connect_button:hover {
+  background-color: darkred;
+}
+
+.address {
+  font-family: "Roboto Mono", monospace;
+  color: black;
+  font-weight: bold;
+  font-size: 17px;
+
+  color: white;
+  color: var(--purple);
+}

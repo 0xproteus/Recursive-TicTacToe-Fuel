@@ -12,6 +12,28 @@
   align-items: center;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* background-color: var(--container_background_color); */
+  /* box-shadow: 0 0 3px var(--container_border_color); */
+  /* border-bottom: 1px solid var(--container_border_color); */
+  z-index: 1000000;
+  position: fixed;
+  right: 0;
+  left: 0;
+  transform: translateZ(1000px);
+  -webkit-transform: translateZ(1000px);
+  /* backdrop-filter: blur(10px); */
+}
+
+.header_right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .footer {
   display: flex;
   flex: 1;
@@ -61,8 +83,7 @@
   border-radius: 5px;
   padding: 0.75rem;
   font-size: 1.1rem;
-  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-    Bitstream Vera Sans Mono, Courier New, monospace;
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
 }
 
 .grid {

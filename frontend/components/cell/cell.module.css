@@ -1,65 +1,82 @@
-.box{
- 
-  
-    width: 50px;
-    height: 50px;
-    border: 2px solid black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    cursor: pointer;
-
+.box {
+  width: 50px;
+  height: 50px;
+  border: 2px solid whitesmoke;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
 .boxHighlight {
-    width: 50px;
-    height: 50px;
-    border: 2px solid green;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    cursor: pointer;
+  width: 50px;
+  height: 50px;
+  /* border: 2px solid green; */
+  border: 2px solid whitesmoke;
+  backdrop-filter: grayscale(100%) brightness(40%) sepia(100%) hue-rotate(205deg) saturate(600%) contrast(0.8);
+
+  /* Set the blend mode to screen, which will blend the colors and make the white areas transparent */
+  background-blend-mode: screen;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
+.player1 {
+  width: 45px;
+  height: 45px;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 
-.player1{
-    width: 45px;
-    height: 45px;
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    
-    /* for cross (set) */
-	background: linear-gradient(to top right, transparent calc(50% - 10px / 2), red calc(50% - 10px / 2) calc(50% + 10px / 2), transparent calc(50% + 10px / 2)),
-				linear-gradient(to bottom right, transparent calc(50% - 10px / 2), red calc(50% - 10px / 2) calc(50% + 10px / 2), transparent calc(50% + 10px / 2));
-	background-size: 80% 80%;
-	background-repeat: no-repeat;
-	background-position: center;
-
+  /* for cross (set) */
+  background: linear-gradient(to top right, transparent calc(50% - 10px / 2), blue calc(50% - 10px / 2) calc(50% + 10px / 2), transparent calc(50% + 10px / 2)),
+    linear-gradient(to bottom right, transparent calc(50% - 10px / 2), blue calc(50% - 10px / 2) calc(50% + 10px / 2), transparent calc(50% + 10px / 2));
+  background-size: 80% 80%;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
-.player2{
-    width: 45px;
-    height: 45px;
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-   
-    /* for circle */
-	background: radial-gradient(blue 65%, transparent 70%);
+.player2 {
+  width: 45px;
+  height: 45px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  /* for circle */
+  background: radial-gradient(yellow 65%, transparent 70%);
 }
 
-.playbutton{
-    border: none;
-    color: none;
-    width:35px;
-    height: 35px;
-    cursor: pointer;
+.playbutton {
+  border: none;
+  color: none;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.offbutton {
+  border: none;
+  color: none;
+  width: 35px;
+  height: 35px;
+  background-color: transparent;
+}
+
+.offbutton:hover {
+  border: none;
+  color: none;
+  width: 35px;
+  height: 35px;
+  cursor: default;
+  background-color: transparent;
+  color: black;
 }
