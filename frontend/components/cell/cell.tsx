@@ -23,12 +23,8 @@ function Cell({ state, index, make_play, highlight }: Props) {
         onClick={() => {
           make_play(index[0], index[1])
         }}
-      >
-        -
-      </button>
+      ></button>
     )
-  } else {
-    cell_state = <button className={styles.offbutton}>-</button>
   }
 
   return (

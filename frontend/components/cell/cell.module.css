@@ -1,7 +1,8 @@
 .box {
   width: 50px;
   height: 50px;
-  border: 2px solid whitesmoke;
+  border: 1px solid var(--gray_darker);
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,8 +13,8 @@
   width: 50px;
   height: 50px;
   /* border: 2px solid green; */
-  border: 2px solid whitesmoke;
-  backdrop-filter: grayscale(100%) brightness(40%) sepia(100%) hue-rotate(205deg) saturate(600%) contrast(0.8);
+  border: 1px solid var(--gray_lighter);
+  /* backdrop-filter: grayscale(100%) brightness(40%) sepia(100%) hue-rotate(205deg) saturate(600%) contrast(0.8); */
 
   /* Set the blend mode to screen, which will blend the colors and make the white areas transparent */
   background-blend-mode: screen;
@@ -34,11 +35,13 @@
   position: relative;
 
   /* for cross (set) */
-  background: linear-gradient(to top right, transparent calc(50% - 10px / 2), blue calc(50% - 10px / 2) calc(50% + 10px / 2), transparent calc(50% + 10px / 2)),
-    linear-gradient(to bottom right, transparent calc(50% - 10px / 2), blue calc(50% - 10px / 2) calc(50% + 10px / 2), transparent calc(50% + 10px / 2));
+  background: linear-gradient(to top right, transparent calc(50% - 10px / 2), orange calc(50% - 10px / 2) calc(50% + 10px / 2), transparent calc(50% + 10px / 2)),
+    linear-gradient(to bottom right, transparent calc(50% - 10px / 2), orange calc(50% - 10px / 2) calc(50% + 10px / 2), transparent calc(50% + 10px / 2));
   background-size: 80% 80%;
   background-repeat: no-repeat;
   background-position: center;
+
+  /* background: orange; */
 }
 
 .player2 {
@@ -51,7 +54,8 @@
   position: relative;
 
   /* for circle */
-  background: radial-gradient(yellow 65%, transparent 70%);
+  background: radial-gradient(lime 65%, transparent 70%);
+  /* background: lime; */
 }
 
 .playbutton {

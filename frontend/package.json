@@ -9,11 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@fuel-wallet/sdk": "^0.2.0",
+    "@fuel-wallet/sdk": "^0.3.0",
     "@types/elliptic": "^6.4.14",
     "cross-spawn": "^7.0.3",
     "fuelchain": "^0.24.2",
-    "fuels": "^0.27.0",
+    "fuels": "^0.29.0",
     "next": "^13.0.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

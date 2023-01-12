@@ -10,6 +10,7 @@
   background: none;
   box-shadow: none;
   color: white;
+  gap: 5px;
 }
 
 .connect_button {
@@ -37,11 +38,11 @@
   border-bottom-right-radius: 10px;
   margin-right: 10px;
 
-  background-color: red;
+  /* background-color: red; */
 }
 
 .connect_button:hover {
-  background-color: darkred;
+  /* background-color: darkred; */
 }
 
 .address {

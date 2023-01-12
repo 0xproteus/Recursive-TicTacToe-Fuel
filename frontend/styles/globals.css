@@ -1,9 +1,24 @@
 html,
+:root {
+  --primary_color: rgb(0, 119, 255);
+
+  --white: #fff;
+
+  --gray_lighter: hsl(0, 0%, 60%);
+  --gray_light: hsl(0, 0%, 40%);
+  --gray: hsl(0, 0%, 35%);
+  --gray_dark: hsl(0, 0%, 25%);
+  --gray_darker: hsl(0, 0%, 15%);
+
+  --black: hsl(0, 0%, 2%);
+}
+
 body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  background: #222222;
+  background: var(--black);
+  color: var(--white);
 }
 
 a {
@@ -16,7 +31,7 @@ a {
 }
 
 button {
-  background-color: red;
+  background-color: var(--primary_color);
   font-weight: bold;
 
   padding: 10px 20px;
@@ -24,8 +39,8 @@ button {
   border-radius: 4px;
   font-family: "Poppins", sans-serif;
   font-size: 16px;
-
-  border: 1px solid;
+  color: white;
+  border: none;
 
   display: flex;
   justify-content: center;
@@ -34,12 +49,17 @@ button {
 }
 
 button:hover {
-  background-color: darkred;
+  /* background-color: darkblue; */
+  filter: brightness(1.2);
   color: white;
   cursor: pointer;
 }
 
-@media (prefers-color-scheme: dark) {
+p {
+  font-size: larger;
+  text-align: center;
+}
+/* @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
@@ -47,4 +67,4 @@ button:hover {
     color: white;
     background: black;
   }
-}
+} */

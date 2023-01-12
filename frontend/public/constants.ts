@@ -1,0 +1,3 @@
+export const CONTRACT_ID = "0x8373c5d52989652b3be8fc587dc40ab406e64922569dbe2e6aebb4617d777730"
+
+export const ZERO_ADDRESS = "fuel1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqsx2mt2"

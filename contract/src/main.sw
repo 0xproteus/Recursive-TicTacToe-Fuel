@@ -5,30 +5,34 @@ use std::auth::{AuthError, msg_sender};
 use std::logging::log;
 
 abi TicTacToe {
-    #[storage(write, read)]
-    fn start_game() -> u64;
-
-    #[storage(write, read)]
-    fn join_game(game_id:u64);
-
-    #[storage( read)]
-    fn view(game_id: u64) ->([u8;9],[[u8;9];9],u8, Identity, Identity, Identity, u8);
-
-    #[storage(write, read)]
-    fn make_play( board:u8, position:u8);
-
     #[storage( read)]
     fn player_state(player: Identity) -> u64;
 
     #[storage( read)]
-    fn active_games() -> Vec<u64>;
+    fn view(game_id: u64) -> Game;
+
+    // #[storage( read)] Rust and Typescript SDK currently don't allow to return Vec
+    // fn view_games() -> Vec<Game>;
+
+    // #[storage( read)]
+    // fn active_games() -> Vec<u64>;
+
+    #[storage(write, read)]
+    fn start_game();
+
+    #[storage(write, read)]
+    fn join_game(game_id:u64);
+
+    #[storage(write, read)]
+    fn make_play( board:u8, position:u8);
 
     #[storage( read, write)]
     fn quit_game();
 }
 
+
 struct Game{
-    game_state: [u8;9],
+    game_state: [u8;9], 
     boards_state: [[u8;9];9],
     next_play_position: u8,
     player1: Identity,
@@ -100,19 +104,56 @@ impl Game{
             return;
         }
     }
-
 }
 
+
 storage{
-   games: StorageMap<u16,Game> = StorageMap {},
+   games: StorageMap<u64,Game> = StorageMap {},
    player_state: StorageMap<Identity, u64> = StorageMap {},
    game_counter: u64 = 1,
    active_games: StorageVec<u64> = StorageVec {},
 }
 
 impl TicTacToe for Contract{
+
+    #[storage( read)]
+    fn player_state(player: Identity) -> u64{
+        storage.player_state.get(player)
+    }
+
+    #[storage( read)]
+    fn view(game_id: u64) -> Game{
+        let game = storage.games.get(game_id);
+        return game;
+    }
+
+    // #[storage( read)]
+    // fn active_games() -> Vec<u64>{
+    //     let mut games: Vec<u64> = Vec::new();
+
+    //     let mut i = 0;
+    //     while i < storage.active_games.len(){
+    //         games.push(storage.active_games.get(i).unwrap());
+    //         i += 1;
+    //     }
+    //     return games;
+    // }
+
+    // #[storage( read)]
+    // fn view_games() -> Vec<Game>{
+    //     let mut vec: Vec<Game> = Vec::new();
+    //     let mut i = 0;
+    //     while i < storage.active_games.len() {
+    //         let game_id = storage.active_games.get(i).unwrap();
+    //         vec.push(storage.games.get(game_id));
+    //         i += 1;
+    //     }
+       
+    //     return vec;
+    // }
+
     #[storage(write, read)]
-    fn start_game() -> u64{
+    fn start_game(){
         assert(storage.player_state.get(msg_sender().unwrap()) == 0);
         let  game_id = storage.game_counter;
         let mut game: Game = storage.games.get(game_id);
@@ -125,7 +166,6 @@ impl TicTacToe for Contract{
         storage.player_state.insert(msg_sender().unwrap(), game_id);
         storage.active_games.push(game_id);
         log((game_id, msg_sender().unwrap()));
-        return game_id;
     }
 
     #[storage(write, read)]
@@ -133,38 +173,11 @@ impl TicTacToe for Contract{
         assert(storage.player_state.get(msg_sender().unwrap()) == 0);
         let mut game: Game = storage.games.get(game_id);
         assert(game.player2 == Identity::Address(Address::from(0x0000000000000000000000000000000000000000000000000000000000000000)));
+        assert(game.player1 != Identity::Address(Address::from(0x0000000000000000000000000000000000000000000000000000000000000000)));
         game.player2 = msg_sender().unwrap();
         storage.player_state.insert(msg_sender().unwrap(), game_id);
         storage.games.insert(game_id, game);
         log((game_id, msg_sender().unwrap()));
-    }
-
-    #[storage( read)]
-    fn view(game_id: u64) ->([u8;9],[[u8;9];9], u8, Identity,Identity,Identity, u8){
-        let game = storage.games.get(game_id);
-        return (game.game_state, game.boards_state, game.next_play_position,game.player1, game.player2, game.next_player , game.winner);
-    }
-
-    #[storage( read)]
-    fn player_state(player: Identity) -> u64{
-        storage.player_state.get(player)
-    }
-
-    #[storage( read)]
-    fn active_games() -> Vec<u64>{
-        let mut games: Vec<u64> = Vec::new();
-
-        let mut i = 0;
-        while i < storage.active_games.len(){
-            games.push(storage.active_games.get(i).unwrap());
-            i += 1;
-        }
-        return games;
-    }
-
-    #[storage( read, write)]
-    fn quit_game(){
-        storage.player_state.insert(msg_sender().unwrap(), 0);
     }
 
     #[storage(write, read)]
@@ -195,9 +208,10 @@ impl TicTacToe for Contract{
         game.boards_state = boards;
         game.check_board_winner(board);
         game.check_game_winner();
+
         if game.winner != 0 {
             storage.player_state.insert(game.player1, 0);
-            storage.player_state.insert(game.player2, 0);
+            storage.player_state.insert(game.player2, 0);  
         }
 
         if game.game_state[position] == 0 {
@@ -207,6 +221,11 @@ impl TicTacToe for Contract{
         }
         storage.games.insert(game_id, game);
         log((game_id,board, position, mark));
+    }
+
+    #[storage( read, write)]
+    fn quit_game(){
+        storage.player_state.insert(msg_sender().unwrap(), 0);
     }
 
 }

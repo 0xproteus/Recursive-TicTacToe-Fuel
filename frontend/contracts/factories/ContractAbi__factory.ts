@@ -23,53 +23,43 @@ const _abi = {
     },
     {
       "typeId": 1,
-      "type": "(_, _, _, _, _, _, _)",
+      "type": "(_, _)",
       "components": [
         {
           "name": "__tuple_element",
-          "type": 2,
+          "type": 14,
           "typeArguments": null
         },
         {
           "name": "__tuple_element",
-          "type": 3,
-          "typeArguments": null
-        },
-        {
-          "name": "__tuple_element",
-          "type": 9,
-          "typeArguments": null
-        },
-        {
-          "name": "__tuple_element",
-          "type": 5,
-          "typeArguments": null
-        },
-        {
-          "name": "__tuple_element",
-          "type": 5,
-          "typeArguments": null
-        },
-        {
-          "name": "__tuple_element",
-          "type": 5,
-          "typeArguments": null
-        },
-        {
-          "name": "__tuple_element",
-          "type": 9,
-          "typeArguments": null
+          "type": 6,
+          "typeArguments": []
         }
       ],
       "typeParameters": null
     },
     {
       "typeId": 2,
-      "type": "[_; 9]",
+      "type": "(_, _, _, _)",
       "components": [
         {
-          "name": "__array_element",
-          "type": 9,
+          "name": "__tuple_element",
+          "type": 14,
+          "typeArguments": null
+        },
+        {
+          "name": "__tuple_element",
+          "type": 15,
+          "typeArguments": null
+        },
+        {
+          "name": "__tuple_element",
+          "type": 15,
+          "typeArguments": null
+        },
+        {
+          "name": "__tuple_element",
+          "type": 15,
           "typeArguments": null
         }
       ],
@@ -81,7 +71,7 @@ const _abi = {
       "components": [
         {
           "name": "__array_element",
-          "type": 2,
+          "type": 15,
           "typeArguments": null
         }
       ],
@@ -89,34 +79,34 @@ const _abi = {
     },
     {
       "typeId": 4,
-      "type": "b256",
-      "components": null,
-      "typeParameters": null
-    },
-    {
-      "typeId": 5,
-      "type": "enum Identity",
+      "type": "[_; 9]",
       "components": [
         {
-          "name": "Address",
-          "type": 6,
-          "typeArguments": null
-        },
-        {
-          "name": "ContractId",
-          "type": 7,
+          "name": "__array_element",
+          "type": 3,
           "typeArguments": null
         }
       ],
       "typeParameters": null
     },
     {
+      "typeId": 5,
+      "type": "b256",
+      "components": null,
+      "typeParameters": null
+    },
+    {
       "typeId": 6,
-      "type": "struct Address",
+      "type": "enum Identity",
       "components": [
         {
-          "name": "value",
-          "type": 4,
+          "name": "Address",
+          "type": 9,
+          "typeArguments": null
+        },
+        {
+          "name": "ContractId",
+          "type": 10,
           "typeArguments": null
         }
       ],
@@ -124,24 +114,134 @@ const _abi = {
     },
     {
       "typeId": 7,
-      "type": "struct ContractId",
+      "type": "generic T",
+      "components": null,
+      "typeParameters": null
+    },
+    {
+      "typeId": 8,
+      "type": "raw untyped ptr",
+      "components": null,
+      "typeParameters": null
+    },
+    {
+      "typeId": 9,
+      "type": "struct Address",
       "components": [
         {
           "name": "value",
-          "type": 4,
+          "type": 5,
           "typeArguments": null
         }
       ],
       "typeParameters": null
     },
     {
-      "typeId": 8,
+      "typeId": 10,
+      "type": "struct ContractId",
+      "components": [
+        {
+          "name": "value",
+          "type": 5,
+          "typeArguments": null
+        }
+      ],
+      "typeParameters": null
+    },
+    {
+      "typeId": 11,
+      "type": "struct Game",
+      "components": [
+        {
+          "name": "game_state",
+          "type": 3,
+          "typeArguments": null
+        },
+        {
+          "name": "boards_state",
+          "type": 4,
+          "typeArguments": null
+        },
+        {
+          "name": "next_play_position",
+          "type": 15,
+          "typeArguments": null
+        },
+        {
+          "name": "player1",
+          "type": 6,
+          "typeArguments": null
+        },
+        {
+          "name": "player2",
+          "type": 6,
+          "typeArguments": null
+        },
+        {
+          "name": "next_player",
+          "type": 6,
+          "typeArguments": null
+        },
+        {
+          "name": "winner",
+          "type": 15,
+          "typeArguments": null
+        }
+      ],
+      "typeParameters": null
+    },
+    {
+      "typeId": 12,
+      "type": "struct RawVec",
+      "components": [
+        {
+          "name": "ptr",
+          "type": 8,
+          "typeArguments": null
+        },
+        {
+          "name": "cap",
+          "type": 14,
+          "typeArguments": null
+        }
+      ],
+      "typeParameters": [
+        7
+      ]
+    },
+    {
+      "typeId": 13,
+      "type": "struct Vec",
+      "components": [
+        {
+          "name": "buf",
+          "type": 12,
+          "typeArguments": [
+            {
+              "name": "",
+              "type": 7,
+              "typeArguments": null
+            }
+          ]
+        },
+        {
+          "name": "len",
+          "type": 14,
+          "typeArguments": null
+        }
+      ],
+      "typeParameters": [
+        7
+      ]
+    },
+    {
+      "typeId": 14,
       "type": "u64",
       "components": null,
       "typeParameters": null
     },
     {
-      "typeId": 9,
+      "typeId": 15,
       "type": "u8",
       "components": null,
       "typeParameters": null
@@ -149,10 +249,25 @@ const _abi = {
   ],
   "functions": [
     {
+      "inputs": [],
+      "name": "active_games",
+      "output": {
+        "name": "",
+        "type": 13,
+        "typeArguments": [
+          {
+            "name": "",
+            "type": 14,
+            "typeArguments": null
+          }
+        ]
+      }
+    },
+    {
       "inputs": [
         {
           "name": "game_id",
-          "type": 8,
+          "type": 14,
           "typeArguments": null
         }
       ],
@@ -167,12 +282,12 @@ const _abi = {
       "inputs": [
         {
           "name": "board",
-          "type": 9,
+          "type": 15,
           "typeArguments": null
         },
         {
           "name": "position",
-          "type": 9,
+          "type": 15,
           "typeArguments": null
         }
       ],
@@ -187,14 +302,14 @@ const _abi = {
       "inputs": [
         {
           "name": "player",
-          "type": 5,
+          "type": 6,
           "typeArguments": null
         }
       ],
       "name": "player_state",
       "output": {
         "name": "",
-        "type": 8,
+        "type": 14,
         "typeArguments": null
       }
     },
@@ -212,7 +327,7 @@ const _abi = {
       "name": "start_game",
       "output": {
         "name": "",
-        "type": 8,
+        "type": 0,
         "typeArguments": null
       }
     },
@@ -220,19 +335,59 @@ const _abi = {
       "inputs": [
         {
           "name": "game_id",
-          "type": 8,
+          "type": 14,
           "typeArguments": null
         }
       ],
       "name": "view",
       "output": {
         "name": "",
+        "type": 11,
+        "typeArguments": null
+      }
+    },
+    {
+      "inputs": [],
+      "name": "view_games",
+      "output": {
+        "name": "",
+        "type": 13,
+        "typeArguments": [
+          {
+            "name": "",
+            "type": 11,
+            "typeArguments": null
+          }
+        ]
+      }
+    }
+  ],
+  "loggedTypes": [
+    {
+      "logId": 0,
+      "loggedType": {
+        "name": "",
+        "type": 1,
+        "typeArguments": null
+      }
+    },
+    {
+      "logId": 1,
+      "loggedType": {
+        "name": "",
+        "type": 2,
+        "typeArguments": null
+      }
+    },
+    {
+      "logId": 2,
+      "loggedType": {
+        "name": "",
         "type": 1,
         "typeArguments": null
       }
     }
   ],
-  "loggedTypes": [],
   "messagesTypes": []
 }
 
