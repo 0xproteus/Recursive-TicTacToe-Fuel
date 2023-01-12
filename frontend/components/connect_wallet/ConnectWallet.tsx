@@ -79,7 +79,7 @@ function ConnectWallet() {
     return (
       <div className={styles.container}>
         <button>
-          <a href="https://fuels-wallet.vercel.app/docs/install/" target="_blank">
+          <a href="https://fuels-wallet.vercel.app/docs/install/" target="_blank" rel="noreferrer">
             Download Fuel Wallet
           </a>
         </button>
