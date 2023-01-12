@@ -511,17 +511,17 @@
   resolved "https://registry.yarnpkg.com/@fuel-ts/wordlists/-/wordlists-0.29.0.tgz#cc92fcda90d12436cb25f62f5b37edcac1ae3bae"
   integrity sha512-sD+3onnj6FqEIiDb76B6QMm1L+nx00tw6r/3SvYwIcfeUL3ay9CPIybLJEBhrCR0U87N3rN6UYbwlWOZMg3vOg==
 
-"@fuel-wallet/sdk@^0.3.0":
-  version "0.3.0-next-183c507"
-  resolved "https://registry.yarnpkg.com/@fuel-wallet/sdk/-/sdk-0.3.0-next-183c507.tgz#b97eee755fae30a3faf90f9da65281a7eddc8c03"
-  integrity sha512-yOZsheDgJuieR6/rhfo+TdSXda7cy254IrlzbzojTPGrO0H6fs9vWA1x27gchqHSicnfc98CZlgLbYj+tH0CNg==
+"@fuel-wallet/sdk@0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@fuel-wallet/sdk/-/sdk-0.2.0.tgz#560f93e35fb0f601ee6d36a8a5b6f1e0c5f6bb55"
+  integrity sha512-6Sx+J0Q+JoPt7lsmMktuVoCfmi9YI4FiJWLEmxRnJrlAxW3EnrfTwhtic68QFj7nfPWzQyQybMj88n1w+mjBIA==
   dependencies:
-    "@types/chrome" "^0.0.204"
+    "@types/chrome" "^0.0.203"
     dexie-observable "4.0.0-beta.13"
     events "^3.3.0"
-    json-rpc-2.0 "^1.4.2"
+    json-rpc-2.0 "^1.4.1"
     uuid "^9.0.0"
-    xstate "^4.35.1"
+    xstate "^4.35.0"
 
 "@graphql-typed-document-node/core@^3.1.1":
   version "3.1.1"
@@ -664,10 +664,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/chrome@^0.0.204":
-  version "0.0.204"
-  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.0.204.tgz#6125f5dbac7628e9f22370d25d63779bea3d64b0"
-  integrity sha512-EvnHfxMHUWP5EAlRMK66uIEUiy36t72vg5RwmzQv9tdIl2ZmAp92NwvmEZJKpbRnIMTEc2BmSmtrFiEISUJ0Sw==
+"@types/chrome@^0.0.203":
+  version "0.0.203"
+  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.0.203.tgz#cf883669ba489ec965e48d32cdcf14f45437f7cf"
+  integrity sha512-JlQNebwpBETVc8U1Rr2inDFuOTtn0lahRAhnddx1dd0S5RrLAFJEEsyIu7AXI14mkCgSunksnuLGioH8kvBqRA==
   dependencies:
     "@types/filesystem" "*"
     "@types/har-format" "*"
@@ -2010,7 +2010,7 @@ js-yaml@^4.1.0:
   dependencies:
     argparse "^2.0.1"
 
-json-rpc-2.0@^1.4.2:
+json-rpc-2.0@^1.4.1:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/json-rpc-2.0/-/json-rpc-2.0-1.4.2.tgz#42fa4fcddf04bde16a92a1c1f346e141b81ba1ee"
   integrity sha512-oqiMRhWN4Q+2ySitZR5GA9vtiNOK19GTDDad0yn8/T/ND+Ap81QP6+3UMl738H4bmRbCEwhQkkBruNqx7EXfUQ==
@@ -2840,10 +2840,10 @@ wrappy@1:
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
   integrity sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==
 
-xstate@^4.35.1:
-  version "4.35.1"
-  resolved "https://registry.yarnpkg.com/xstate/-/xstate-4.35.1.tgz#f2ea205e6e47cca285336a8f44ef2c154c9629a5"
-  integrity sha512-imxk6+76HJRt7qHrUnWnAjaHHhAsUKoVa+PXkyaPd3Gll0VjZsy6/L+FkatIJnjI5Kpwp0R8k63KfIFnzVLskQ==
+xstate@^4.35.0:
+  version "4.35.2"
+  resolved "https://registry.yarnpkg.com/xstate/-/xstate-4.35.2.tgz#92916638e315c448f1d26e920273187907256817"
+  integrity sha512-5X7EyJv5OHHtGQwN7DsmCAbSnDs3Mxl1cXQ4PVaLwi+7p/RRapERnd1dFyHjYin+KQoLLfuXpl1dPBThgyIGNg==
 
 yallist@^4.0.0:
   version "4.0.0"
