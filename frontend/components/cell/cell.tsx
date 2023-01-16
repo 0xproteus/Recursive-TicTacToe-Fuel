@@ -11,7 +11,7 @@ interface Props {
 
 function Cell({ state, index, make_play, highlight, play_position }: Props) {
   const className = highlight ? styles.boxHighlight : styles.box
-  const play = highlight && play_position[1] === index[1]
+  const play = play_position[0] === index[0] && play_position[1] === index[1]
 
   let cell_state
   if (state == SlotState.Player1) {
