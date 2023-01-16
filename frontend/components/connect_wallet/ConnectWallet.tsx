@@ -1,3 +1,4 @@
+"use client"
 import { Address } from "fuels"
 import { useContext, useEffect, useState } from "react"
 import { WalletContext } from "../../contexts/WalletContext"
@@ -6,7 +7,6 @@ import { CONTRACT_ID } from "../../public/constants"
 import styles from "./connectWallet.module.css"
 import { NativeAssetId, ZeroBytes32 } from "@fuel-ts/constants"
 import { ZERO_ADDRESS } from "../../public/constants"
-// @refresh reset
 
 function ConnectWallet() {
   const { address, setAddress, provider, setProvider, setWallet, fuelInstalled, setFuelInstalled, setGameID, isConnected, setConnected } = useContext(WalletContext)
