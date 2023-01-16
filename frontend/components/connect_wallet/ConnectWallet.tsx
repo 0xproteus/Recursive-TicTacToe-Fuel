@@ -1,4 +1,3 @@
-"use client"
 import { Address } from "fuels"
 import { useContext, useEffect, useState } from "react"
 import { WalletContext } from "../../contexts/WalletContext"
@@ -71,7 +70,7 @@ function ConnectWallet() {
     } else {
       setFuelInstalled(false)
     }
-  }, [])
+  }, [fuelInstalled])
 
   if (fuelInstalled === false) {
     return (
