@@ -150,8 +150,8 @@ export default function Home() {
   const help2 = (
     <div>
       <p>
-        The position in which a player can make their move on the board is determined by the location of the previous player's move. For example, if the previous player made a move in the center and
-        top-left corner of a cell, the next player must make their move in the top-left corner board.
+        The position in which a player can make their move on the board is determined by the location of the previous player&apos;s move. For example, if the previous player made a move in the center
+        and top-left corner of a cell, the next player must make their move in the top-left corner board.
       </p>
       <p> To make a move in your turn click on the position you wish and confirm the transaction on your wallet. To exit game and start a new one press the Quit button.</p>
     </div>
