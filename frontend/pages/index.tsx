@@ -12,6 +12,7 @@ import { NativeAssetId, ZeroBytes32 } from "@fuel-ts/constants"
 import Overlay from "../components/overlay/overlay"
 import { title } from "../public/title"
 import { CONTRACT_ID, ZERO_ADDRESS } from "../public/constants"
+import { useFuel } from "../hooks/useFuel"
 
 declare global {
   interface Window {

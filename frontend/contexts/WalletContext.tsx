@@ -4,7 +4,7 @@ import { BigNumberish, Provider, Wallet, TransactionResponse, Address } from "fu
 import { NativeAssetId, ZeroBytes32 } from "@fuel-ts/constants"
 import { ContractAbi__factory } from "../contracts"
 import { CONTRACT_ID } from "../public/constants"
-import { useFuel } from "../components/hooks/useFuel"
+import { useFuel } from "../hooks/useFuel"
 
 export type WalletContextType = {
   address: Address
@@ -58,7 +58,7 @@ function WalletProvider({ children }: Props) {
   const [fuelInstalled, setFuelInstalled] = useState<boolean>(false)
   const [gameID, setGameID] = useState<BigNumberish>(0)
   const [isConnected, setConnected] = useState<boolean>(false)
-  const [fuel, notDetected] = useFuel()
+  const [fuel, notDetected, isLoading] = useFuel()
 
   function connect() {
     const request_connect_wallet = async () => {
@@ -66,7 +66,6 @@ function WalletProvider({ children }: Props) {
         await fuel.connect()
 
         const account = await fuel.accounts()
-        fuel.getWallet(account[0])
         const add = new Address(account[0])
         setAddress(add)
         setProvider(fuel.getProvider())
@@ -115,13 +114,14 @@ function WalletProvider({ children }: Props) {
         console.log(err)
       }
     }
+
     if (fuel) {
-      c()
       setFuelInstalled(true)
+      c()
     } else {
       setFuelInstalled(false)
     }
-  }, [])
+  }, [isLoading])
 
   return (
     <WalletContext.Provider
