@@ -4,9 +4,9 @@
 
 ---
 
-This project implements a game of Recursive Tic-Tac-Toe on the FuelVM. It is intended to experiment with some of the components of the Fuel toolchain.  
-In Recursive Tic-Tac-Toe there is board with 9 cells just like regular Tic-Tac-Toe but inside each cell there is another game of Tic-Tac-Toe occurring, in order to win you have to allign 3 winning Tic-Tac-Toes.  
-The position in the board on which you can play in is determined by the action of the player in the previous turn, so if they played in the board center and, top left corner of the cell the next player must make a move in the board top left corner.
+This project implements a game of Recursive Tic-Tac-Toe on the FuelVM. It is intended to experiment with some of the components of the Fuel toolchain.
+
+Recursive Tic-Tac-Toe is a variation of the classic Tic-Tac-Toe game where each cell on the board contains a smaller Tic-Tac-Toe board. The objective of the game is to get three of your symbols in a row on the larger board. The position in which a player can make their move on the board is determined by the location of the previous player's move. For example, if the previous player made a move in the center and top-left corner of a cell, the next player must make their move in the top-left corner board. This adds an extra layer of strategy to the game, as players must not only consider their next move on the current board, but also how it will affect the smaller boards within it.
 
 ## Project Structure
 
@@ -14,7 +14,7 @@ The position in the board on which you can play in is determined by the action o
 
 The project contains 3 main folders:  
 The contract folder contains the smart contract in Sway and tests in Rust.  
-The scripts folder contains tests using typescript using Jest.  
+The scripts folder contains tests in typescript using Jest.  
 The frontend folder contains a frontend to interact with the smart contract using Next.js.
 
 ```

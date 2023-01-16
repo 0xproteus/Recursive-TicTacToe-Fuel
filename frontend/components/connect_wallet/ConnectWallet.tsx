@@ -4,6 +4,8 @@ import { WalletContext } from "../../contexts/WalletContext"
 import { ContractAbi__factory } from "../../contracts"
 import { CONTRACT_ID } from "../../public/constants"
 import styles from "./connectWallet.module.css"
+import { NativeAssetId, ZeroBytes32 } from "@fuel-ts/constants"
+import { ZERO_ADDRESS } from "../../public/constants"
 
 function ConnectWallet() {
   const { address, setAddress, provider, setProvider, setWallet, fuelInstalled, setFuelInstalled, setGameID, isConnected, setConnected } = useContext(WalletContext)
@@ -20,25 +22,23 @@ function ConnectWallet() {
       setWallet(window.fuel.getWallet(account[0]))
       setConnected(true)
       const contract = ContractAbi__factory.connect(CONTRACT_ID, provider)
-      const { value } = await contract.functions
-        .player_state({
-          Address: { value: add.toHexString() },
-        })
-        .get()
+      const { value } = await contract.functions.player_state({ value: add.toHexString() }).get()
       setGameID(value)
-    } catch (err) {}
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   const disconnect = async () => {
     await window.fuel.disconnect()
-    setAddress(null)
+    setAddress(Address.fromString(ZeroBytes32))
     setWallet(null)
     setGameID(0)
     setConnected(false)
   }
 
-  function pretty_address(address: string, digits = 6) {
-    return address.slice(0, 2 + digits) + "•••" + address.slice(-digits)
+  function pretty_address(addr: string, digits = 6) {
+    return addr.slice(0, 2 + digits) + "•••" + addr.slice(-digits)
   }
 
   const c = async () => {
@@ -49,16 +49,13 @@ function ConnectWallet() {
         const accounts = await window.fuel.accounts()
         window.fuel.getWallet(accounts[0])
         const add = new Address(accounts[0])
+        console.log("ss", add)
         setAddress(add)
         setProvider(window.fuel.getProvider())
         setWallet(window.fuel.getWallet(accounts[0]))
         setConnected(true)
         const contract = ContractAbi__factory.connect(CONTRACT_ID, provider)
-        const { value } = await contract.functions
-          .player_state({
-            Address: { value: add.toHexString() },
-          })
-          .get()
+        const { value } = await contract.functions.player_state({ value: add.toHexString() }).get()
         setGameID(value)
       }
     } catch (err) {
@@ -85,7 +82,7 @@ function ConnectWallet() {
         </button>
       </div>
     )
-  } else if (!address) {
+  } else if (address.toString() == ZERO_ADDRESS) {
     return (
       <div className={styles.container}>
         <button className={styles.connect_button} onClick={connect}>

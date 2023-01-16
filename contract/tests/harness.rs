@@ -42,15 +42,15 @@ async fn can_increase_game_counter() {
    
     let result = contract.methods().start_game().call().await.unwrap();
   
-    let log = result.get_logs_with_type::<(u64, Identity)>().unwrap();
-    println!("{:?}",log);
-    assert_eq!(log[0].0,1);
+    let log = result.get_logs_with_type::<Start>().unwrap();
+    println!("{:?}",log[0].player);
+    assert_eq!(log[0].game_id,1);
 
     let result = contract2.methods().start_game().call().await.unwrap();
   
-    let log = result.get_logs_with_type::<(u64, Identity)>().unwrap();
+    let log = result.get_logs_with_type::<Start>().unwrap();
     println!("{:?}",log);
-    assert_eq!(log[0].0,2); 
+    assert_eq!(log[0].game_id,2); 
 }
 
 #[tokio::test]
@@ -59,20 +59,20 @@ async fn can_make_play() {
 
     let result = contract.methods().start_game().call().await.unwrap();
     
-    let log = result.get_logs_with_type::<(u64, Identity)>().unwrap();
+    let log = result.get_logs_with_type::<Start>().unwrap();
     println!("{:?}",log);
-    assert_eq!(log[0].0,1);
+    assert_eq!(log[0].game_id,1);
 
-    let result = contract2.methods().join_game(log[0].0).call().await.unwrap();
+    let result = contract2.methods().join_game(log[0].game_id).call().await.unwrap();
     
-    let log = result.get_logs_with_type::<(u64, Identity)>().unwrap();
-    
-    assert_eq!(log[0].0,1); 
+    let log = result.get_logs_with_type::<Join>().unwrap();
+    println!("{:?}",log);
+    assert_eq!(log[0].game_id,1); 
 
     let result = contract.methods().make_play(3,4).call().await.unwrap();
 
-    let log = result.get_logs_with_type::<(u64,u8,u8,u8)>().unwrap();
+    let log = result.get_logs_with_type::<Move>().unwrap();
     println!("{:?}",log);
-    assert_eq!(log[0],(1,3,4,1));
+    assert_eq!(log[0],Move{game_id:1,board:3,position:4, mark:1});
 
 }

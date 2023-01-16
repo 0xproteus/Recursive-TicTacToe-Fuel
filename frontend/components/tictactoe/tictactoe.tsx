@@ -7,10 +7,11 @@ interface Props {
   game_state: SlotState
   index: number
   next_play_position: number
+  play_position: number[]
   make_play: (board: number, position: number) => void
 }
 
-function TicTacToe({ tictactoe_state, game_state, index, next_play_position, make_play }: Props) {
+function TicTacToe({ tictactoe_state, game_state, index, next_play_position, make_play, play_position }: Props) {
   const highlight = next_play_position == index || next_play_position == 10
 
   let board
@@ -22,19 +23,19 @@ function TicTacToe({ tictactoe_state, game_state, index, next_play_position, mak
     board = (
       <>
         <div className={styles.line}>
-          <Cell state={tictactoe_state[0]} index={[index, 0]} make_play={make_play} highlight={highlight} />
-          <Cell state={tictactoe_state[1]} index={[index, 1]} make_play={make_play} highlight={highlight} />
-          <Cell state={tictactoe_state[2]} index={[index, 2]} make_play={make_play} highlight={highlight} />
+          <Cell state={tictactoe_state[0]} index={[index, 0]} make_play={make_play} highlight={highlight} play_position={play_position} />
+          <Cell state={tictactoe_state[1]} index={[index, 1]} make_play={make_play} highlight={highlight} play_position={play_position} />
+          <Cell state={tictactoe_state[2]} index={[index, 2]} make_play={make_play} highlight={highlight} play_position={play_position} />
         </div>
         <div className={styles.line}>
-          <Cell state={tictactoe_state[3]} index={[index, 3]} make_play={make_play} highlight={highlight} />
-          <Cell state={tictactoe_state[4]} index={[index, 4]} make_play={make_play} highlight={highlight} />
-          <Cell state={tictactoe_state[5]} index={[index, 5]} make_play={make_play} highlight={highlight} />
+          <Cell state={tictactoe_state[3]} index={[index, 3]} make_play={make_play} highlight={highlight} play_position={play_position} />
+          <Cell state={tictactoe_state[4]} index={[index, 4]} make_play={make_play} highlight={highlight} play_position={play_position} />
+          <Cell state={tictactoe_state[5]} index={[index, 5]} make_play={make_play} highlight={highlight} play_position={play_position} />
         </div>
         <div className={styles.line}>
-          <Cell state={tictactoe_state[6]} index={[index, 6]} make_play={make_play} highlight={highlight} />
-          <Cell state={tictactoe_state[7]} index={[index, 7]} make_play={make_play} highlight={highlight} />
-          <Cell state={tictactoe_state[8]} index={[index, 8]} make_play={make_play} highlight={highlight} />
+          <Cell state={tictactoe_state[6]} index={[index, 6]} make_play={make_play} highlight={highlight} play_position={play_position} />
+          <Cell state={tictactoe_state[7]} index={[index, 7]} make_play={make_play} highlight={highlight} play_position={play_position} />
+          <Cell state={tictactoe_state[8]} index={[index, 8]} make_play={make_play} highlight={highlight} play_position={play_position} />
         </div>
       </>
     )

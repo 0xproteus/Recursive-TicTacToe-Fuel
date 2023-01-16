@@ -4,9 +4,27 @@ use std::storage::{StorageMap, StorageVec};
 use std::auth::{AuthError, msg_sender};
 use std::logging::log;
 
+//Structs for events
+struct Start{
+    game_id: u64,
+    player: Address,
+}
+
+struct Join{
+    game_id: u64,
+    player: Address,
+}
+
+struct Move{
+    game_id: u64,
+    board: u8,
+    position: u8,
+    mark: u8,
+}
+
 abi TicTacToe {
     #[storage( read)]
-    fn player_state(player: Identity) -> u64;
+    fn player_state(player: Address) -> u64;
 
     #[storage( read)]
     fn view(game_id: u64) -> Game;
@@ -35,9 +53,9 @@ struct Game{
     game_state: [u8;9], 
     boards_state: [[u8;9];9],
     next_play_position: u8,
-    player1: Identity,
-    player2: Identity,
-    next_player: Identity,
+    player1: Address,
+    player2: Address,
+    next_player: Address,
     winner: u8,
 }
 
@@ -109,7 +127,7 @@ impl Game{
 
 storage{
    games: StorageMap<u64,Game> = StorageMap {},
-   player_state: StorageMap<Identity, u64> = StorageMap {},
+   player_state: StorageMap<Address, u64> = StorageMap {},
    game_counter: u64 = 1,
    active_games: StorageVec<u64> = StorageVec {},
 }
@@ -117,7 +135,7 @@ storage{
 impl TicTacToe for Contract{
 
     #[storage( read)]
-    fn player_state(player: Identity) -> u64{
+    fn player_state(player: Address) -> u64{
         storage.player_state.get(player)
     }
 
@@ -154,44 +172,65 @@ impl TicTacToe for Contract{
 
     #[storage(write, read)]
     fn start_game(){
-        assert(storage.player_state.get(msg_sender().unwrap()) == 0);
+        let player_address: Address = match msg_sender().unwrap() {
+            Identity::Address(adrr) => adrr,
+            _ => revert(50),
+        };
+        assert(storage.player_state.get(player_address)==0);
         let  game_id = storage.game_counter;
         let mut game: Game = storage.games.get(game_id);
-    
-        game.player1 = msg_sender().unwrap();
+      
+        game.player1 = player_address;
         game.next_play_position = 10;
-        game.next_player = msg_sender().unwrap();
+        game.next_player = player_address;
+
         storage.games.insert(game_id, game);
         storage.game_counter += 1;
-        storage.player_state.insert(msg_sender().unwrap(), game_id);
+        storage.player_state.insert(player_address, game_id);
         storage.active_games.push(game_id);
-        log((game_id, msg_sender().unwrap()));
+
+        log(Start{game_id: game_id, player: player_address});
     }
 
     #[storage(write, read)]
     fn join_game(game_id:u64){
-        assert(storage.player_state.get(msg_sender().unwrap()) == 0);
+        let player_address: Address = match msg_sender().unwrap() {
+            Identity::Address(adrr) => adrr,
+            _ => revert(0),
+        };
+       
+        assert(storage.player_state.get(player_address)==0);
         let mut game: Game = storage.games.get(game_id);
-        assert(game.player2 == Identity::Address(Address::from(0x0000000000000000000000000000000000000000000000000000000000000000)));
-        assert(game.player1 != Identity::Address(Address::from(0x0000000000000000000000000000000000000000000000000000000000000000)));
-        game.player2 = msg_sender().unwrap();
-        storage.player_state.insert(msg_sender().unwrap(), game_id);
+      
+        assert(game.player2 == Address::from(0x0000000000000000000000000000000000000000000000000000000000000000));
+        assert(game.player1 != Address::from(0x0000000000000000000000000000000000000000000000000000000000000000));
+       
+        game.player2 =player_address;
+        
+        storage.player_state.insert(player_address, game_id);
         storage.games.insert(game_id, game);
-        log((game_id, msg_sender().unwrap()));
+
+        log(Join{game_id: game_id, player: player_address});
     }
 
     #[storage(write, read)]
     fn make_play( board:u8, position:u8){
-        let game_id = storage.player_state.get(msg_sender().unwrap());
+        let player_address: Address = match msg_sender().unwrap() {
+            Identity::Address(adrr) => adrr,
+            _ => revert(0),
+        };
+        
+        let game_id = storage.player_state.get(player_address);
         assert(game_id != 0);
         let mut game: Game = storage.games.get(game_id);
         
         if game.next_play_position != 10 {
             assert(board == game.next_play_position);
         }
+
         assert(game.game_state[board] == 0);
         assert(game.boards_state[board][position] == 0);
-        assert(game.next_player == msg_sender().unwrap());
+        assert(game.next_player == player_address);
         assert(board < 9 && position < 9);
 
         let mut mark: u8 = 2;
@@ -220,12 +259,16 @@ impl TicTacToe for Contract{
             game.next_play_position = 10;
         }
         storage.games.insert(game_id, game);
-        log((game_id,board, position, mark));
+        log(Move{game_id: game_id, board: board, position: position, mark: mark});
     }
 
     #[storage( read, write)]
     fn quit_game(){
-        storage.player_state.insert(msg_sender().unwrap(), 0);
+        let player_address: Address = match msg_sender().unwrap() {
+            Identity::Address(adrr) => adrr,
+            _ => revert(0),
+        };
+        storage.player_state.insert(player_address, 0);
     }
 
 }

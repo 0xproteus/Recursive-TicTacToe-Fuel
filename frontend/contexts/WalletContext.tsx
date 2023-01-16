@@ -1,16 +1,17 @@
 import { createContext, useState } from "react"
 import { Dispatch, SetStateAction } from "react"
 import { BigNumberish, Provider, Wallet, TransactionResponse, Address } from "fuels"
+import { NativeAssetId, ZeroBytes32 } from "@fuel-ts/constants"
 
 export type WalletContextType = {
-  address: Address | null
+  address: Address
   provider: Provider
   wallet: any
   fuelInstalled: boolean
   gameID: BigNumberish
   isConnected: boolean
 
-  setAddress: Dispatch<SetStateAction<Address | null>>
+  setAddress: Dispatch<SetStateAction<Address>>
   setProvider: Dispatch<SetStateAction<Provider>>
   setWallet: Dispatch<SetStateAction<any>>
   setFuelInstalled: Dispatch<SetStateAction<boolean>>
@@ -19,7 +20,7 @@ export type WalletContextType = {
 }
 
 export const WalletContext = createContext<WalletContextType>({
-  address: null,
+  address: Address.fromString(ZeroBytes32),
   provider: new Provider("https://node-beta-2.fuel.network/graphql"),
   wallet: null,
   fuelInstalled: false,
@@ -42,7 +43,7 @@ function WalletProvider({ children }: Props) {
   const RPC = "https://node-beta-2.fuel.network/graphql"
   //const RPC = "http://127.0.0.1:4000/graphql"
 
-  const [address, setAddress] = useState<Address | null>(null)
+  const [address, setAddress] = useState<Address>(Address.fromString(ZeroBytes32))
   const [wallet, setWallet] = useState<any>(new Wallet())
   const [provider, setProvider] = useState<Provider>(new Provider(RPC))
   const [fuelInstalled, setFuelInstalled] = useState<boolean>(false)

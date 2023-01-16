@@ -1,14 +1,14 @@
 import styles from "../styles/Home.module.css"
 import Board from "../components/board/board"
-import { useState, useEffect, use, useContext } from "react"
+import { useState, useEffect, useContext } from "react"
 
-import { BigNumberish, Provider, Wallet, TransactionResponse, Address } from "fuels"
+import { BigNumberish, Provider, Wallet, Address } from "fuels"
 import { ContractAbi__factory } from "../contracts"
-import { ContractAbi, IdentityOutput, IdentityInput, AddressInput } from "../contracts/ContractAbi"
+import { ContractAbi, AddressInput } from "../contracts/ContractAbi"
 
 import ConnectWallet from "../components/connect_wallet/ConnectWallet"
 import { WalletContext } from "../contexts/WalletContext"
-import { NativeAssetId } from "@fuel-ts/constants"
+import { NativeAssetId, ZeroBytes32 } from "@fuel-ts/constants"
 import Overlay from "../components/overlay/overlay"
 import { title } from "../public/title"
 import { CONTRACT_ID, ZERO_ADDRESS } from "../public/constants"
@@ -20,9 +20,9 @@ declare global {
 }
 
 export type PlayerState = {
-  player1: string | null
-  player2: string | undefined
-  current_player: string | undefined
+  player1: Address
+  player2: Address
+  current_player: Address
 }
 
 export enum SlotState {
@@ -40,12 +40,16 @@ export default function Home() {
   const [boardState, setBoardState] = useState<SlotState[][]>(Array(9).fill(Array(9).fill(SlotState.Empty)))
   const [nextPlayPositon, setNextPlayPositon] = useState(10)
   const [gameBoard, setGameBoard] = useState<SlotState[]>(Array(9).fill(SlotState.Empty))
-  const [players, setPlayers] = useState<PlayerState>()
+  const [players, setPlayers] = useState<PlayerState>({
+    player1: Address.fromString(ZeroBytes32),
+    player2: Address.fromString(ZeroBytes32),
+    current_player: Address.fromString(ZeroBytes32),
+  })
   const [winner, setWinner] = useState<SlotState>(SlotState.Empty)
 
   const [gameID_input, set_gameID_input] = useState<string>("0")
-  const [opponentAddress, setOpponentAddress] = useState<Address | undefined>(undefined)
   const [overlay, setOverlay] = useState<boolean>(false)
+  const [playPosition, setPlayPosition] = useState<number[]>([10, 10])
 
   const contract = ContractAbi__factory.connect(CONTRACT_ID, provider)
 
@@ -68,18 +72,11 @@ export default function Home() {
         setBoardState(value.boards_state)
         setNextPlayPositon(value.next_play_position)
         setPlayers({
-          player1: value.player1.Address?.value,
-          player2: value.player2.Address?.value,
-          current_player: value.next_player.Address?.value,
+          player1: Address.fromString(value.player1.value),
+          player2: Address.fromString(value.player2.value),
+          current_player: Address.fromString(value.next_player.value),
         } as PlayerState)
         setWinner(value.winner)
-        if (value.player1.Address?.value === address?.toHexString()) {
-          const Oppaddress = Address.fromString(value.player2.Address!.value)
-          setOpponentAddress(Oppaddress)
-        } else {
-          const Oppaddress = Address.fromString(value.player1.Address!.value)
-          setOpponentAddress(Oppaddress)
-        }
         console.log(value)
       } catch (err) {
         console.log(err)
@@ -92,7 +89,7 @@ export default function Home() {
 
     try {
       const { logs } = await contr.functions.start_game().txParams({ gasPrice: 1 }).call()
-      setGameID(logs[0])
+      setGameID(logs[0].game_id)
     } catch (err) {
       console.log(err)
     }
@@ -113,12 +110,16 @@ export default function Home() {
 
   const makePlay = async (board: number, position: number) => {
     if ((nextPlayPositon == board || nextPlayPositon == 10) && winner == SlotState.Empty) {
-      if (players?.current_player === address?.toHexString()) {
+      if (players?.current_player.toHexString() === address?.toHexString()) {
+        setPlayPosition([board, position])
         const contr = ContractAbi__factory.connect(CONTRACT_ID, wallet)
         try {
           await contr.functions.make_play(board, position).txParams({ gasPrice: 1 }).call()
+          setPlayPosition([10, 10])
         } catch (err) {
           console.log(err)
+          console.log("rejected")
+          setPlayPosition([10, 10])
         }
       }
       await getState(gameID)
@@ -136,21 +137,21 @@ export default function Home() {
     }
   }
 
-  let help = (
+  const help = (
     <div>
       <p>
-        In this game there is a board with 9 cells just like regular Tic-Tac-Toe with the twist that inside each cell there is another game of Tic-Tac-Toe occurring, in order to win you have to allign
-        3 winning Tic-Tac-Toes.
+        Recursive Tic-Tac-Toe is a variation of the classic Tic-Tac-Toe game where each cell on the board contains a smaller Tic-Tac-Toe board. The objective of the game is to get three of your
+        symbols in a row on the larger board.
       </p>
       <p> To play connect you wallet and start a new game or insert a game ID to join an already existing one.</p>
     </div>
   )
 
-  let help2 = (
+  const help2 = (
     <div>
       <p>
-        The position in the board on which you can play in is determined by the action of the player in the previous turn, so if they played in the board center and, top left corner of the cell the
-        next player must make a move in the board top left corner.
+        The position in which a player can make their move on the board is determined by the location of the previous player's move. For example, if the previous player made a move in the center and
+        top-left corner of a cell, the next player must make their move in the top-left corner board.
       </p>
       <p> To make a move in your turn click on the position you wish and confirm the transaction on your wallet. To exit game and start a new one press the Quit button.</p>
     </div>
@@ -199,10 +200,18 @@ export default function Home() {
     display = (
       <>
         {title}
-        <Board tictactoe_state={boardState} game_state={gameBoard} nex_play_positon={nextPlayPositon} make_play={makePlay} />
+        <Board tictactoe_state={boardState} game_state={gameBoard} nex_play_positon={nextPlayPositon} make_play={makePlay} play_position={playPosition} />
         <h2>Game ID: {gameID.toString()}</h2>
-        <h2>Opponent: {opponentAddress?.toString() === ZERO_ADDRESS ? "No Opponent" : opponentAddress?.toString()}</h2>
-        <h2>Current Turn: {players?.current_player === players?.player1 ? "X" : "O"}</h2>
+
+        <h2>
+          Opponent:{" "}
+          {players.player2.toString() === ZERO_ADDRESS || players.player1.toString() === ZERO_ADDRESS
+            ? "No Opponent"
+            : players.player1.toString() === address.toString()
+            ? players.player2.toString()
+            : players.player1.toString()}
+        </h2>
+        <h2>Current Turn: {players.current_player.toString() === players.player1.toString() ? "X" : "O"}</h2>
         <h2>Play Position: {nextPlayPositon == 10 ? "Free Play" : playPositions[nextPlayPositon]}</h2>
         <h2>Winner: {winningMessage[winner]}</h2>
 

@@ -5,11 +5,13 @@ interface Props {
   state: SlotState
   index: number[]
   highlight: boolean
+  play_position: number[]
   make_play: (board: number, position: number) => void
 }
 
-function Cell({ state, index, make_play, highlight }: Props) {
+function Cell({ state, index, make_play, highlight, play_position }: Props) {
   const className = highlight ? styles.boxHighlight : styles.box
+  const play = highlight && play_position[1] === index[1]
 
   let cell_state
   if (state == SlotState.Player1) {
@@ -19,6 +21,7 @@ function Cell({ state, index, make_play, highlight }: Props) {
   } else if (highlight) {
     cell_state = (
       <button
+        style={{ backgroundColor: play ? "var(--primary_color)" : "" }}
         className={styles.playbutton}
         onClick={() => {
           make_play(index[0], index[1])
