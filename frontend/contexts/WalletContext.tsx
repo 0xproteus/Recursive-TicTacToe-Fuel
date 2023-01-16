@@ -1,7 +1,9 @@
-import { createContext, useState } from "react"
+import { createContext, useState, useEffect } from "react"
 import { Dispatch, SetStateAction } from "react"
 import { BigNumberish, Provider, Wallet, TransactionResponse, Address } from "fuels"
 import { NativeAssetId, ZeroBytes32 } from "@fuel-ts/constants"
+import { ContractAbi__factory } from "../contracts"
+import { CONTRACT_ID } from "../public/constants"
 
 export type WalletContextType = {
   address: Address
@@ -17,6 +19,9 @@ export type WalletContextType = {
   setFuelInstalled: Dispatch<SetStateAction<boolean>>
   setGameID: Dispatch<SetStateAction<BigNumberish>>
   setConnected: Dispatch<SetStateAction<boolean>>
+
+  connect: () => void
+  disconnect: () => void
 }
 
 export const WalletContext = createContext<WalletContextType>({
@@ -33,6 +38,9 @@ export const WalletContext = createContext<WalletContextType>({
   setFuelInstalled: () => {},
   setGameID: () => {},
   setConnected: () => {},
+
+  connect: () => {},
+  disconnect: () => {},
 })
 
 interface Props {
@@ -50,6 +58,69 @@ function WalletProvider({ children }: Props) {
   const [gameID, setGameID] = useState<BigNumberish>(0)
   const [isConnected, setConnected] = useState<boolean>(false)
 
+  function connect() {
+    const request_connect_wallet = async () => {
+      try {
+        await window.fuel.connect()
+
+        const account = await window.fuel.accounts()
+        window.fuel.getWallet(account[0])
+        const add = new Address(account[0])
+        setAddress(add)
+        setProvider(window.fuel.getProvider())
+        setWallet(window.fuel.getWallet(account[0]))
+        setConnected(true)
+        const contract = ContractAbi__factory.connect(CONTRACT_ID, provider)
+        const { value } = await contract.functions.player_state({ value: add.toHexString() }).get()
+        setGameID(value)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    request_connect_wallet()
+  }
+
+  function disconnect() {
+    const dis = async () => {
+      await window.fuel.disconnect()
+      setAddress(Address.fromString(ZeroBytes32))
+      setWallet(null)
+      setGameID(0)
+      setConnected(false)
+    }
+    dis()
+  }
+
+  useEffect(() => {
+    const c = async () => {
+      try {
+        const accounts = await window.fuel.accounts()
+
+        if (accounts) {
+          const accounts = await window.fuel.accounts()
+          window.fuel.getWallet(accounts[0])
+          const add = new Address(accounts[0])
+          console.log("ss", add)
+          setAddress(add)
+          setProvider(window.fuel.getProvider())
+          setWallet(window.fuel.getWallet(accounts[0]))
+          setConnected(true)
+          const contract = ContractAbi__factory.connect(CONTRACT_ID, provider)
+          const { value } = await contract.functions.player_state({ value: add.toHexString() }).get()
+          setGameID(value)
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    if (window.fuel) {
+      c()
+      setFuelInstalled(true)
+    } else {
+      setFuelInstalled(false)
+    }
+  }, [])
+
   return (
     <WalletContext.Provider
       value={{
@@ -66,6 +137,9 @@ function WalletProvider({ children }: Props) {
         setFuelInstalled,
         setGameID,
         setConnected,
+
+        connect,
+        disconnect,
       }}
     >
       {children}
