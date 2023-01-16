@@ -13,6 +13,7 @@ export type WalletContextType = {
   fuelInstalled: boolean
   gameID: BigNumberish
   isConnected: boolean
+  isLoading: boolean
 
   setAddress: Dispatch<SetStateAction<Address>>
   setProvider: Dispatch<SetStateAction<Provider>>
@@ -32,6 +33,7 @@ export const WalletContext = createContext<WalletContextType>({
   fuelInstalled: false,
   gameID: 0,
   isConnected: false,
+  isLoading: true,
 
   setAddress: () => {},
   setWallet: () => {},
@@ -132,6 +134,7 @@ function WalletProvider({ children }: Props) {
         fuelInstalled,
         gameID,
         isConnected,
+        isLoading,
 
         setWallet,
         setProvider,

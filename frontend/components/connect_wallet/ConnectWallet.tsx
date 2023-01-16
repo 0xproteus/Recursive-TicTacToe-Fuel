@@ -4,10 +4,14 @@ import styles from "./connectWallet.module.css"
 import { ZERO_ADDRESS } from "../../public/constants"
 
 function ConnectWallet() {
-  const { address, fuelInstalled, connect, disconnect } = useContext(WalletContext)
+  const { address, fuelInstalled, connect, disconnect, isLoading } = useContext(WalletContext)
 
   function pretty_address(addr: string, digits = 6) {
     return addr.slice(0, 2 + digits) + "•••" + addr.slice(-digits)
+  }
+
+  if (isLoading) {
+    return null
   }
 
   if (fuelInstalled === false) {
