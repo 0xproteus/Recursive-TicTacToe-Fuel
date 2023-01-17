@@ -1,18 +1,14 @@
 import styles from "../styles/Home.module.css"
 import Board from "../components/board/board"
 import { useState, useEffect, useContext } from "react"
-
-import { BigNumberish, Provider, Wallet, Address } from "fuels"
+import { BigNumberish, Address } from "fuels"
 import { ContractAbi__factory } from "../contracts"
-import { ContractAbi, AddressInput } from "../contracts/ContractAbi"
-
 import ConnectWallet from "../components/connect_wallet/ConnectWallet"
 import { WalletContext } from "../contexts/WalletContext"
-import { NativeAssetId, ZeroBytes32 } from "@fuel-ts/constants"
+import { ZeroBytes32 } from "@fuel-ts/constants"
 import Overlay from "../components/overlay/overlay"
 import { title } from "../public/title"
 import { CONTRACT_ID, ZERO_ADDRESS } from "../public/constants"
-import { useFuel } from "../hooks/useFuel"
 
 declare global {
   interface Window {
@@ -178,7 +174,7 @@ export default function Home() {
               </>
             )}
 
-            <input type="number" id="gameIDinput" placeholder="Game ID" /*value={gameID_input}*/ onChange={(v) => set_gameID_input(v.target.value)} />
+            <input type="number" id="gameIDinput" placeholder="Game ID" onChange={(v) => set_gameID_input(v.target.value)} />
             <button
               onClick={() => {
                 setOverlay(true)
@@ -203,7 +199,11 @@ export default function Home() {
         {title}
         <Board tictactoe_state={boardState} game_state={gameBoard} nex_play_positon={nextPlayPositon} make_play={makePlay} play_position={playPosition} />
         <h2>Game ID: {gameID.toString()}</h2>
-
+        <h2 style={{ display: "flex" }}>
+          Current Turn: {players?.current_player.toHexString() === address?.toHexString() ? "Yours" : "Opponent's"}{" "}
+          <div className={players.current_player.toString() === players.player1.toString() ? styles.player1 : styles.player2}></div>
+        </h2>
+        <h2>Play Position: {nextPlayPositon == 10 ? "Free Play" : playPositions[nextPlayPositon]}</h2>
         <h2>
           Opponent:{" "}
           {players.player2.toString() === ZERO_ADDRESS || players.player1.toString() === ZERO_ADDRESS
@@ -212,8 +212,6 @@ export default function Home() {
             ? players.player2.toString()
             : players.player1.toString()}
         </h2>
-        <h2>Current Turn: {players.current_player.toString() === players.player1.toString() ? "X" : "O"}</h2>
-        <h2>Play Position: {nextPlayPositon == 10 ? "Free Play" : playPositions[nextPlayPositon]}</h2>
         <h2>Winner: {winningMessage[winner]}</h2>
 
         <div className={styles.buttonsContainer}>

@@ -22,6 +22,17 @@ struct Move{
     mark: u8,
 }
 
+// Struct for saving game state
+struct Game{
+    game_state: [u8;9], 
+    boards_state: [[u8;9];9],
+    next_play_position: u8,
+    player1: Address,
+    player2: Address,
+    next_player: Address,
+    winner: u8,
+}
+
 abi TicTacToe {
     #[storage( read)]
     fn player_state(player: Address) -> u64;
@@ -48,17 +59,7 @@ abi TicTacToe {
     fn quit_game();
 }
 
-
-struct Game{
-    game_state: [u8;9], 
-    boards_state: [[u8;9];9],
-    next_play_position: u8,
-    player1: Address,
-    player2: Address,
-    next_player: Address,
-    winner: u8,
-}
-
+// Implemetation to check if there is a winner and update state
 impl Game{
     fn check_board_winner(ref mut self, board_position:u8) {
         let mut game:[u8;9] = self.game_state;

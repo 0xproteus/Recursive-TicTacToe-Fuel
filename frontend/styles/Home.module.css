@@ -13,6 +13,41 @@
   align-items: center;
 }
 
+.player1 {
+  width: 35px;
+  height: 35px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-left: 10px;
+  margin-top: 2px;
+  /* for cross (set) */
+  background: linear-gradient(to top right, transparent calc(50% - 10px / 2), orange calc(50% - 10px / 2) calc(50% + 10px / 2), transparent calc(50% + 10px / 2)),
+    linear-gradient(to bottom right, transparent calc(50% - 10px / 2), orange calc(50% - 10px / 2) calc(50% + 10px / 2), transparent calc(50% + 10px / 2));
+  background-size: 80% 80%;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  /* background: orange; */
+}
+
+.player2 {
+  width: 35px;
+  height: 35px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-left: 10px;
+  margin-top: 2px;
+  /* for circle */
+  background: radial-gradient(lime 65%, transparent 70%);
+  /* background: lime; */
+}
+
 .buttonsContainer {
   display: flex;
   gap: 5px;
