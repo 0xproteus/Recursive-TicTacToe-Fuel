@@ -140,7 +140,7 @@ export default function Home() {
         Recursive Tic-Tac-Toe is a variation of the classic Tic-Tac-Toe game where each cell on the board contains a smaller Tic-Tac-Toe board. The objective of the game is to get three of your
         symbols in a row on the larger board.
       </p>
-      <p> To play connect you wallet and start a new game or insert a game ID to join an already existing one.</p>
+      <p> To play connect you wallet and start a new game or insert a game ID to join an already existing one. At this time there is no matchmaking system in place.</p>
     </div>
   )
 
